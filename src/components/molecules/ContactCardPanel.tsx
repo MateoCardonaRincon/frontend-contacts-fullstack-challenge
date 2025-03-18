@@ -1,13 +1,16 @@
 import React from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { ContactInfoCard } from '../atoms/ContactInfoCard';
-import { contactsData } from '../../redux/data';
 import { RegularLabel } from '../atoms/labels/RegularLabel';
+import { useSelector } from 'react-redux';
+import { Contact } from '../../redux/types/contactsTypes';
+import { RootState } from '../../redux/store';
 
 export const ContactCardPanel = () => {
+  const contactsData: Contact[] = useSelector((store: RootState) => store.contacts.contacts);
   return (
     <View style={styles.container}>
-      <RegularLabel text={'Mis contactos'} size={24} />
+      <RegularLabel text={`Mis contactos (${contactsData.length})`} size={24} />
       {contactsData.length > 0 ? (
         <ScrollView>
           {contactsData.map(contact => (
@@ -15,7 +18,7 @@ export const ContactCardPanel = () => {
           ))}
         </ScrollView>
       ) : (
-        <RegularLabel text={'No hay contactos para mostrar'} size={18}/>
+        <RegularLabel text={'No hay contactos para mostrar'} size={18} />
       )}
     </View>
   );

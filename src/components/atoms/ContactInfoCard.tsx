@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { Contact } from '../../redux/data';
+import { Contact } from '../../redux/types/contactsTypes';
 
 interface Props {
   contact: Contact;
@@ -10,7 +10,7 @@ export const ContactInfoCard = ({ contact }: Props) => {
     <View style={styles.container}>
       {/* <Text style={styles.text}>{`ID: ${contact.id}`}</Text> */}
       <Text style={styles.text}>{`Nombre: ${contact.name}`}</Text>
-      <Text style={styles.text}>{`Teléfono: ${contact.phoneNumber}`}</Text>
+      <Text style={styles.text}>{`Teléfono: ${contact.cellphone}`}</Text>
       <Text style={styles.text}>{`Correo electrónico: ${contact.email}`}</Text>
     </View>
   );
