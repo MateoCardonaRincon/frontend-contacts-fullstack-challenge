@@ -1,9 +1,12 @@
 import React from 'react';
-import { Alert, Button, StyleSheet, View } from 'react-native';
+import { Button, StyleSheet, View } from 'react-native';
+import { BUTTON_STYLES } from '../../../constants/styles';
 
 interface Props {
   text: string;
-  color: string
+  color: string;
+  action: () => void;
+  testID?: string;
 }
 
 export const RegularButtom = (props: Props) => {
@@ -12,24 +15,13 @@ export const RegularButtom = (props: Props) => {
       <Button
         title={props.text}
         color={props.color}
-        onPress={() => Alert.alert('Estamos trabajando en esta funcionalidad')}
+        onPress={props.action}
+        testID={props.testID}
       />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    marginHorizontal: 2,
-    marginBlock: 2,
-    borderRadius: 5,
-    display: 'flex',
-  },
-  title: {
-    textAlign: 'center',
-    color: '#333652',
-    fontSize: 24,
-  },
+  container: BUTTON_STYLES,
 });

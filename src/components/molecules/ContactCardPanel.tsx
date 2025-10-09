@@ -1,20 +1,38 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { ContactInfoCard } from '../atoms/ContactInfoCard';
 import { RegularLabel } from '../atoms/labels/RegularLabel';
 import { useSelector } from 'react-redux';
-import { Contact } from '../../redux/types/contactsTypes';
 import { RootState } from '../../redux/store';
+import { useState } from 'react';
 
-export const ContactCardPanel = () => {
-  const contactsData: Contact[] = useSelector((store: RootState) => store.contacts.contacts);
+export const ContactCardPanel = ({ navigation }: any) => {
+  const { contacts, currentPhone } = useSelector(
+    (state: RootState) => state.contacts,
+  );
+  const [phonesFilter, onChangePhonesFilter] = useState(contacts);
+  useEffect(() => {
+    if (currentPhone.length === 0) {
+      onChangePhonesFilter(contacts);
+    } else {
+      const phones = contacts.filter(contact =>
+        contact.cellphone.includes(currentPhone),
+      );
+      onChangePhonesFilter(phones);
+    }
+  }, [contacts, currentPhone]);
+
   return (
     <View style={styles.container}>
-      <RegularLabel text={`Mis contactos (${contactsData.length})`} size={24} />
-      {contactsData.length > 0 ? (
+      <RegularLabel text={`Mis contactos (${contacts.length})`} size={24} />
+      {contacts.length > 0 ? (
         <ScrollView>
-          {contactsData.map(contact => (
-            <ContactInfoCard key={contact.id} contact={contact} />
+          {phonesFilter.map(contact => (
+            <ContactInfoCard
+              key={contact.id}
+              contact={contact}
+              navigation={navigation}
+            />
           ))}
         </ScrollView>
       ) : (
@@ -25,7 +43,6 @@ export const ContactCardPanel = () => {
 };
 const styles = StyleSheet.create({
   container: {
-    padding: 10,
     marginBottom: 330,
   },
 });

@@ -1,7 +1,11 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { AuthenticationState } from '../types/authTypes';
 
 const initialState: AuthenticationState = {
+  userId: '',
+  name: '',
+  email: '',
+  createdAt: '',
   isAuth: false,
 };
 
@@ -9,15 +13,16 @@ export const authenticationSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    startSession: state => {
-      state.isAuth = true;
+    startSession: (state, action: PayloadAction<AuthenticationState>) => {
+      state = { ...action.payload };
+      return state;
     },
     closeSession: state => {
-      state.isAuth = false;
+      state = initialState;
+      return state;
     },
   },
 });
 
 export default authenticationSlice.reducer;
-export const { startSession, closeSession } =
-authenticationSlice.actions;
+export const { startSession, closeSession } = authenticationSlice.actions;

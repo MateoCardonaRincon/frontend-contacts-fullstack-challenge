@@ -3,11 +3,20 @@ import { StyleSheet, View } from 'react-native';
 import { RegularLabel } from '../atoms/labels/RegularLabel';
 import { CustomInput } from '../atoms/CustomInput';
 
-export const InputGroup = () => {
+interface Props {
+  text: string;
+  isSensitive?: boolean;
+  inputAction: (text: string) => void;
+}
+export const InputGroup = ({
+  text,
+  inputAction,
+  isSensitive = false,
+}: Props) => {
   return (
     <View style={styles.container}>
-      <RegularLabel text="Ingrese un teléfono del contacto:" />
-      <CustomInput />
+      <RegularLabel text={text} />
+      <CustomInput action={inputAction} isSensitive={isSensitive} />
     </View>
   );
 };
